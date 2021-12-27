@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Bienvenue sur SymBNB
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="mt-3 jumbotron">
+        <h1 class="display-3">Bienvenue sur SymBNB !</h1>
+        <p class="lead">Nous mettons en relations les voyageurs et les propriétaires qui veulent profiter d'opportunités et gagner de l'argent en proposant leur bien à la location !</p>
+        <hr class="my-4">
+        <p>Vous êtes voyageur ? Et vous voulez voir où vous pourrez loger pour votre prochain déplacement ?</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button">Voir nos annonces</a>
+        </p>
+    </div>
+
+    <h2 class="mt-3 mb-4 h1">Nos appartements stars</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3 card bg-light">
+                <div class="card-header text-center">
+                    3 chambres, <strong>49&euro; / nuit</strong> <br>
+                    <small>Pas encore noté</small>
+                </div> {# fin card-header #}
+
+                <img src="https://picsum.photos/id/193/300/200" alt="Image de l'appartement" style="height: 200px; width: 100%; display:block;">
+
+                <div class="card-body">
+                    <h4 class="card-title">
+                        Chambre dans un chateau
+                    </h4>
+                    <p class="card-text">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Est sapiente, rerum officiis repellat tempore laborum iure facilis! Quae aut corrupti, repellendus voluptate reprehenderit eius dolor quia, ipsum ad nemo quisquam?
+                    </p>
+                    <a href="#" class="btn btn-secondary">En savoir plus</a>
+                </div> {# fin card-body #}
+            </div> {# fin card #}
+        </div> {# fin col-4 #}
+        <div class="col-md-4">
+            <div class="mb-3 card bg-light">
+                <div class="card-header text-center">
+                    3 chambres, <strong>49&euro; / nuit</strong> <br>
+                    <small>Pas encore noté</small>
+                </div> {# fin card-header #}
+
+                <img src="https://picsum.photos/id/164/300/200" alt="Image de l'appartement" style="height: 200px; width: 100%; display:block;">
+
+                <div class="card-body">
+                    <h4 class="card-title">
+                        Maisonnette pied dans l'eau
+                    </h4>
+                    <p class="card-text">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Est sapiente, rerum officiis repellat tempore laborum iure facilis! Quae aut corrupti, repellendus voluptate reprehenderit eius dolor quia, ipsum ad nemo quisquam?
+                    </p>
+                    <a href="#" class="btn btn-secondary">En savoir plus</a>
+                </div> {# fin card-body #}
+            </div> {# fin card #}
+        </div> {# fin col-4 #}
+        <div class="col-md-4">
+            <div class="card bg-light mb-3">
+                <div class="card-header text-center">
+                    3 chambres, <strong>49&euro; / nuit</strong> <br>
+                    <small>Pas encore noté</small>
+                </div> {# fin card-header #}
+
+                <img src="https://picsum.photos/id/234/300/200" alt="Image de l'appartement" style="height: 200px; width: 100%; display:block;">
+
+                <div class="card-body">
+                    <h4 class="card-title">
+                        Appartement près de la tour Eiffel
+                    </h4>
+                    <p class="card-text">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Est sapiente, rerum officiis repellat tempore laborum iure facilis! Quae aut corrupti, repellendus voluptate reprehenderit eius dolor quia, ipsum ad nemo quisquam?
+                    </p>
+                    <a href="#" class="btn btn-secondary">En savoir plus</a>
+                </div> {# fin card-body #}
+            </div> {# fin card #}
+        </div> {# fin col-4 #}
+    </div> {# fin row #}
+
+    <h2 class="mt-3 mb-4 h1">Nos propriétaires stars</h2>
+
+    <div class="row">
+        <div class="col">
+            <div class=" mb-3 card border-secondary">
+                <div class="card-body">
+                    <h4 class="card-title">Casimir Pollux</h4>
+                    <hr>
+                    <div class="card-text">
+                        <img src="https://picsum.photos/id/1025/64/64" alt="Avatar de Toto" class="float-left mr-3">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, nostrum.</p>
+                        <a href="#" class="btn btn-success float-right">En savoir plus</a>
+                    </div> {# fin card-text #}
+                </div> {# fin card-body #}
+            </div> {# fin card #}
+        </div> {# fin col #}
+        <div class="col">
+            <div class=" mb-3 card border-secondary">
+                <div class="card-body">
+                    <h4 class="card-title">Aglaë Sidonie</h4>
+                    <hr>
+                    <div class="card-text">
+                        <img src="https://picsum.photos/id/433/64/64" alt="Avatar de Toto" class="float-left mr-3">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, nostrum.</p>
+                        <a href="#" class="btn btn-success float-right">En savoir plus</a>
+                    </div> {# fin card-text #}
+                </div> {# fin card-body #}
+            </div> {# fin card #}
+        </div> {# fin col #}
+    </div> {# fin row #}
+
+
+
+
+</div> {# fin container #}
+
+{% endblock %}
