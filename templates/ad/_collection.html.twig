@@ -1,0 +1,48 @@
+{# On définit ici le thème à appliquer pour la partie 'ajout d'image(s)' #}
+{# NOTE : la partie qui gère l'ajout d'image(s) s'appelle « add_image » #}
+
+{# Permet de modifier la sortie de « form_widget() » sur le champ « ad_images » #}
+{% block _ad_images_widget %}
+    <p>Ajoutez vos images</p>
+
+    {# ‼ la variable « form » n'est pas la même que celle du bloc 'body' #}
+    {{ form_widget(form) }} 
+
+    {# Permet de compter le nombre de champ 'image" (initialisé à zéro) #}
+    <input type="hidden" id="widgets-counter" value="0">
+
+    <form-group>
+        <button type="button" id="add-image" class="btn btn-primary">Ajouter une image</button>
+    </form-group>
+
+{% endblock %}
+
+{# On redéfinit la façon dont est affiché « row » #}
+{# Permet de n'afficher que le champ input ('widget')
+    (n'affiche donc plus les 'labels', les 'erreurs' et les 'infos') #}
+{% block _ad_images_entry_row %}
+    {{ form_widget(form)}}
+{% endblock %}
+
+{# Définit l'affichage ('form_widget') des 'entries" de la collection #}
+{% block _ad_images_entry_widget %}
+    <div class="form-group" id="block_{{id}}">
+        <div class="row">
+            <div class="col-10">
+                <div class="row">
+                    <div class="col">
+                        {{ form_errors(form.url) }}
+                        {{ form_widget(form.url) }}
+                    </div>
+                    <div class="col">
+                        {{ form_errors(form.caption) }}
+                        {{ form_widget(form.caption) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-danger" data-action="delete" data-target="#block_{{id}}">X</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

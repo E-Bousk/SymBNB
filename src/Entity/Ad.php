@@ -2,15 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\AdRepository;
 use Cocur\Slugify\Slugify;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\AdRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Entity(repositoryClass=AdRepository::class)
  * @ORM\HasLifecycleCallbacks
+ * @UniqueEntity(fields={"title"}, message="Il existe déjà une annonce avec ce titre ({{ value }})")
  */
 class Ad
 {
@@ -23,6 +27,9 @@ class Ad
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min = 10, max = 255,
+     *      minMessage = "Le titre doit faire au moins {{ limit }} caractères !",
+     *      maxMessage = "Le titre ne peut pas faire plus de {{ limit }} caractères !")
      */
     private $title;
 
@@ -38,11 +45,15 @@ class Ad
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(min = 20,
+     *      minMessage = "Le titre doit faire au moins {{ limit }} caractères !")
      */
     private $introduction;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(min = 100,
+     *      minMessage = "Le titre doit faire au moins {{ limit }} caractères !")
      */
     private $content;
 
@@ -58,6 +69,7 @@ class Ad
 
     /**
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="ad", orphanRemoval=true)
+     * @Assert\Valid()
      */
     private $images;
 

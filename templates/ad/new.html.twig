@@ -2,6 +2,17 @@
 
 {% block title %}Création d'une annonce{% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('js/ads.js')}}"></script>
+{% endblock %}
+
+{# Note : « form_theme » permet de spécifier un thème pour un formulaire donné #}
+{# Ici : le thème à utiliser est dans le fichier « 'ad/_collection.html.twig' » 
+    et doit s'appliquer pour le formulaire « form »)  #}
+{% form_theme form 'ad/_collection.html.twig' %}
+
+{# « _self » = dans le fichier actuel #}
+{# {% form_theme form _self %} #}
    
 {% block body %}
 
@@ -12,11 +23,10 @@
 
         {{ form_widget(form)}}
 
-        <button type="submit" class="btn btn-primary">Créer la nouvelle annonce</button>
+        <button type="submit" class="btn btn-primary">Créer une nouvelle annonce</button>
 
         {{ form_end(form)}}
 
     </div>
-
 
 {% endblock %}
