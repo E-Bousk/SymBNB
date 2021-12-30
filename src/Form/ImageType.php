@@ -17,7 +17,8 @@ class ImageType extends AbstractType
             ->add('url', UrlType::class, [
                 'attr' => [
                     'placeholder' => 'URL de l\'image'
-                ]
+                ],
+                'default_protocol' => null
             ])
             ->add('caption', TextType::class, [
                 'attr' => [

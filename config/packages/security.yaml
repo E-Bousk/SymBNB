@@ -1,14 +1,42 @@
 security:
+    # Définit quel encoder utiliser et sur quelle entité
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         users_in_memory: { memory: null }
+
+        # Indique que les données 'utilisateur' viennent de la BDD avec l'entity « User »
+        users_in_database:
+            entity:
+                class: App\Entity\User
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
-            provider: users_in_memory
+
+            # Indique quel « provider » utiliser
+            provider: users_in_database
+
+            # Indique l'utilisation d'un formulaire de 'login'
+            # (méthode d'authentification via un formulaire)
+            form_login:
+                # Chemin de la page de connexion
+                login_path: account_login
+                # Chemin de vérification des informations d'authentification
+                check_path: account_login
+
+            # Déconnection
+            logout:
+                # Chemin de la page de déconnexion
+                path: account_logout
+                # Page sur laquelle rediriger
+                target: account_login
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

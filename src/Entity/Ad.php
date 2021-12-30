@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=AdRepository::class)
- * @ORM\HasLifecycleCallbacks
+ * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(fields={"title"}, message="Il existe déjà une annonce avec ce titre ({{ value }})")
  */
 class Ad
@@ -59,6 +59,7 @@ class Ad
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Url(message = "L'URL '{{ value }}' n'est pas une URL valide")
      */
     private $coverImage;
 
@@ -73,11 +74,12 @@ class Ad
      */
     private $images;
 
-    public function __construct()
-    {
-        $this->images = new ArrayCollection();
-    }
-
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="ads")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+    
     /**
      * Création du slug
      * 
@@ -94,7 +96,10 @@ class Ad
         }
     }
 
-
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -211,6 +216,18 @@ class Ad
                 $image->setAd(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

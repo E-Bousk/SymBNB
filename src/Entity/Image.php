@@ -22,7 +22,7 @@ class Image
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Url()
+     * @Assert\Url(message = "L'URL '{{ value }}' n'est pas une URL valide")
      */
     private $url;
 
