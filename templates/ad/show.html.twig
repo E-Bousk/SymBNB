@@ -11,7 +11,7 @@
         <p class="h2">
             <strong>{{ ad.rooms }} chambres</strong> pour <strong>{{ ad.price }}&euro;</strong> par nuit
         </p>
-        <a href="#" class="btn btn-primary">Réserver</a>
+        <a class="btn btn-primary" href="#">Réserver</a>
     </div>
 </div>
 
@@ -47,18 +47,21 @@
             </div>
         </div>
         <div class="col">
-            <div class="row">
-                <div class="col-4">
-                    <img src="http://placehold.it/64x64" alt="Avatar de Casimir">
+        {% set a = ad.author %}
+            <div class="mb-3 row align-item-center">
+                <div class="col-3">
+                    <a href="{{ path('user_show', {slug: a.slug }) }}">
+                        <img class="avatar avatar-medium" src="{{ a.picture }}" alt="Avatar de {{ a.fullName }}">
+                    </a>
                 </div>
                 <div class="col">
-                    <h3>Casimir Pollux</h3>
-                    <span class="badge badge-primary">3 annonces</span>
+                    <a href="{{ path('user_show', {slug: a.slug }) }}">
+                        <h3>{{ a.fullName }}</h3>
+                    </a>
+                    <span class="badge badge-primary">{{ a.ads | length }} annonces</span>
                 </div>
             </div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eveniet corrupti accusamus pariatur enim cumque, fuga sunt modi dolorum possimus.</p>
-            <p>Aliquam, iure possimus. Unde, quisquam quia facere voluptatem quas officiis laboriosam, consectetur velit, rem eligendi deserunt magnam voluptate harum asperiores!</p>
-            <p>Neque magni aliquid provident nulla quo, eligendi qui odio, vitae distinctio accusantium quas fugit officia excepturi sint ex! Dicta, doloribus.</p>
+            {{ a.description | raw }}
         </div>
     </div>
 </div>

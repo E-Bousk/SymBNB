@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page {{ elision(user.fullName | first | lower, 'de') ~ user.fullName }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="mb-3 row align-items-center">
+            <div class="col-3 text-center">
+                <img class="mb-3 avatar" src="{{ user.picture }}" alt="Avatar de {{ user.fullName }}">
+                <br>
+                <span class="badge badge-primary">{{ user.ads | length }} annonces</span>
+            </div>
+            <div class="col-9">
+                <h1>{{ user.fullName }}</h1>
+                {% if user is same as (app.user) %}
+                    <div class="mt-3">
+                        <a class="mr-2 mb-2 btn btn-primary" href="{{ path('account_profile') }}">Modifier mes informations</a>
+                        <a class="mb-2 btn btn-primary" href="{{ path('account_password_edit') }}">Changer mon mot de passe</a>
+                    </div>
+                {% endif %}
+                
+            </div>
+        </div>
+        {{ user.description | raw }}
+        <hr>
+        <h2>Les annonces {{ elision(user.fullName | first | lower, 'de') ~ user.fullName }}</h2>
+        {% if user.ads | length > 0 %}
+            <div class="row">
+                {% for ad in user.ads %}
+                    {% include 'ad/_ads.html.twig' %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                <strong>{{ user.fullName }}</strong> n'a pas (encore) d'annonce sur ce site
+            </div>
+        
+        {% endif %}
+    </div>
+{% endblock %}

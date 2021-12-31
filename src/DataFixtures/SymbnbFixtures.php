@@ -34,7 +34,7 @@ class SymbnbFixtures extends Fixture
                 ->setLastName($faker->lastName())
                 ->setEmail($faker->freeEmail())
                 ->setIntroduction($faker->sentence())
-                ->setDescription($faker->sentences(3, true))
+                ->setDescription('<p>' . join('</p><p>', $faker->paragraphs(3)) . '</p>')
                 ->setPassword($this->encoder->encodePassword($user, 'password'))
                 ->setPicture(sprintf('https://randomuser.me/api/portraits/%s/%s.jpg', $genre, $faker->randomNumber(2)))
             ;
