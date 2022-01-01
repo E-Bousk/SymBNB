@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Page {{ elision(user.fullName | first | lower, 'de') ~ user.fullName }}{% endblock %}
+{% block title %}Page {{ elision(user.fullName, 'de') ~ user.fullName }}{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -23,7 +23,11 @@
         </div>
         {{ user.description | raw }}
         <hr>
-        <h2>Les annonces {{ elision(user.fullName | first | lower, 'de') ~ user.fullName }}</h2>
+        {% if app.user is same as user %}
+            <h2>Mes annonces</h2>
+        {% else %}
+            <h2>Les annonces {{ elision(user.fullName, 'de') ~ user.fullName }}</h2>
+        {% endif %}
         {% if user.ads | length > 0 %}
             <div class="row">
                 {% for ad in user.ads %}

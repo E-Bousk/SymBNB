@@ -11,6 +11,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+use function PHPSTORM_META\map;
+
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\HasLifecycleCallbacks()
@@ -82,7 +84,17 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity=Ad::class, mappedBy="author")
      */
     private $ads;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Role::class, mappedBy="users")
+     */
+    private $userRoles;
        
+    /**
+     * Donne le nom complet (prénom + nom)
+     * 
+     * @return string 
+     */
     public function GetFullName()
     {
         return "{$this->firstName} {$this->lastName}";
@@ -107,6 +119,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->ads = new ArrayCollection();
+        $this->userRoles = new ArrayCollection();
     }
     
     public function getId(): ?int
@@ -240,7 +253,6 @@ class User implements UserInterface
         return $this;
     }
 
-
     /**
      * Returns the roles granted to the user.
      * Alternatively, the roles might be stored on a ``roles`` property,
@@ -251,7 +263,13 @@ class User implements UserInterface
      */
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        $roles = $this->userRoles->map(function($role) {
+            return $role->getTitle();
+        })->toArray();
+
+        $roles[] = 'ROLE_USER';
+
+        return $roles;
     }
 
     /**
@@ -280,4 +298,31 @@ class User implements UserInterface
      * the plain-text password is stored on this object.
      */
     public function eraseCredentials() {}
+
+    /**
+     * @return Collection|Role[]
+     */
+    public function getUserRoles(): Collection
+    {
+        return $this->userRoles;
+    }
+
+    public function addUserRole(Role $userRole): self
+    {
+        if (!$this->userRoles->contains($userRole)) {
+            $this->userRoles[] = $userRole;
+            $userRole->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRole(Role $userRole): self
+    {
+        if ($this->userRoles->removeElement($userRole)) {
+            $userRole->removeUser($this);
+        }
+
+        return $this;
+    }
 }

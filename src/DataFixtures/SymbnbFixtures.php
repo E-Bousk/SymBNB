@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Ad;
 use App\Entity\Image;
+use App\Entity\Role;
 use App\Entity\User;
 use Faker\Factory;
 use Doctrine\Persistence\ObjectManager;
@@ -23,6 +24,24 @@ class SymbnbFixtures extends Fixture
     {
         $faker= Factory::create('fr_FR');
 
+        /**  ADMIN USER fixture **/
+        $adminRole = new Role;
+        $adminRole->setTitle('ROLE_ADMIN');
+        $manager->persist($adminRole);
+
+        $adminUser = new User;
+        $adminUser->setFirstName('Aglaë')
+            ->setLastName('Sidonie')
+            ->setEmail('root@symfony.com')
+            ->setPassword($this->encoder->encodePassword($adminUser, 'root'))
+            ->setPicture('https://randomuser.me/api/portraits/women/60.jpg')
+            ->setIntroduction($faker->sentence())
+            ->setDescription('<p>' . join('</p><p>', $faker->paragraphs(3)) . '</p>')
+            ->addUserRole($adminRole)
+        ;
+        $manager->persist($adminUser);
+
+        /**  USERS fixture **/
         $users = [];
         $genres = ['women', 'men'];
 
@@ -43,6 +62,7 @@ class SymbnbFixtures extends Fixture
             $users[] = $user;
         }
 
+        /** ADS fixture **/
         for ($i = 1; $i <= 30; $i++) {
             $title= $faker->sentence();
             $coverImage= $faker->imageUrl(1000,350);
@@ -60,6 +80,7 @@ class SymbnbFixtures extends Fixture
             ;
             $manager->persist($ad);
 
+            /**  IMAGES AD fixture **/
             for ($j = 1; $j <= mt_rand(2, 5); $j++) {
                 $image = new Image();
                 $image->setUrl($faker->imageUrl())
