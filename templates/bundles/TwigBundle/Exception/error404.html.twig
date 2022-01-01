@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Page introuvable' %}
+
+{% block body %}
+<div class="container">
+    <div class="col-md-8 mx-auto text-center">
+        <h1 class="my-5 h2 rounded bg-secondary">Page introuvable !</h1>
+        <div class="px-2">
+            <p class="h4 py-2">La page demandée n'existe pas (ou n'existe plus)</p>
+            <p class="pb-3">Veuillez vérifier l'adresse, <a href="{{ path('homepage') }}">retournez à la page d'accueil</a>, ou <a href="{{ path('ads_index') }}">retournez à la liste des annonces</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

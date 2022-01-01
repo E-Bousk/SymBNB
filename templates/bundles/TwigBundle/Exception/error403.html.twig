@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title "Vous n'avez pas le droit d'accéder à cette ressource" %}
+
+{% block body %}
+<div class="container">
+    <div class="col-md-8 mx-auto text-center">
+        <h1 class="my-5 h2 rounded bg-danger">Accès interdit</h1>
+        <div class="px-2">
+            <p class="h4 py-2">Vous n'êtes pas autorisé(e) à accéder à cette page !</p>
+            <p>Le serveur à renvoyé une erreur « 403 Forbidden »</p>
+            {# <p>{{ exception.message }}</p> #}{# ‼ Déconseillé en PROD. dû à la gestion du cache ‼ #}
+            <p class="pb-3"><a href="{{ path('homepage') }}">Retourner à la page d'accueil</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
