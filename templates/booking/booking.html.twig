@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réserver l'annonce : {{ ad.title }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.fr.min.js') }}" charset="UTF-8"></script>
+    <script src="{{ asset('js/booking.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {# Récupère les dates non disponibles (« ad.notAvailableDays ») 
+        et les transfome en tableau utilisable par DatePicker (jour/mois/année) #}
+    {# a) Initialise le tableau #}
+    {% set arrayOfDates = "[" %}
+    {# b) Boucle sur chaque date pour la transformer, et y concatèner date, guillemet et virgule #}
+    {% for noAvailableDay in ad.notAvailableDays %}
+        {% set arrayOfDates = arrayOfDates ~ "'" ~ noAvailableDay.format('d/m/Y') ~ "', " %}
+    {% endfor %}
+    {# c) concatène le crochet fermant du tableau #}
+    {% set arrayOfDates = arrayOfDates ~ "]" %}
+    {# Permet de récuperer ce tableau depuis Javascript #}
+    <span type="hidden" id="arrayOfDates" data-not-available-date="{{ arrayOfDates }}"></span>
+    
+    <div class="container">
+        <h1 class="h3">Réserver pour l'annonce : «&nbsp;{{ ad.title }}&nbsp;»</h1>
+        <p>Vous êtes sur le point de réserver le bien <strong>{{ elision(ad.author.fullName, 'de') ~ ad.author.fullName }}</stong></p>
+        
+        {{ form_start(form) }}
+        <div class="alert alert-light">
+            <h2 class="h4">Quelles sont les dates qui vous intéressent</h2>
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.startDate) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.endDate) }}
+                </div>
+            </div>
+            <h3 class="mt-4 h5">Montant du séjour : <span id="amount">...</span>&nbsp;&euro;</h3>
+            <span id="days">0</span> nuit(s) à <span id="price" data-price="{{ ad.price }}">{{ ad.price }}&nbsp;&euro; / nuit</span>
+
+            <h3 class="mt-4 h5">Vous avez un commentaire ?</h3>
+            {{ form_row(form.comment) }}
+        </div>
+
+        <h6>Vacances de rêve ? Hébergement d'une nuit pour le travail ? Peu importe, on est avec vous !</h5>
+        <button type="submit" class="btn btn-success">Je réserve !</button>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Ad;
+use App\Entity\Booking;
 use App\Entity\Image;
 use App\Entity\Role;
 use App\Entity\User;
@@ -88,6 +89,25 @@ class SymbnbFixtures extends Fixture
                     ->setAd($ad)
                 ;
                 $manager->persist($image);
+            }
+
+            /** BOOKING AD fixture */
+            for ($k = 1; $k <= mt_rand(0, 5); $k++) {
+                $booking = new Booking();
+
+                $startDate = $faker->dateTimeBetween('-3 months');
+                $duration = mt_rand(1, 14);
+                $endDate = (clone $startDate)->modify("+$duration days");
+
+                $booking->setAd($ad)
+                    ->setBooker($faker->randomElement($users))
+                    ->setCreatedAt($faker->dateTimeBetween('-6 months'))
+                    ->setStartDate($startDate)
+                    ->setEndDate($endDate)
+                    ->setAmount($ad->getPrice() * $duration)
+                    ->setComment($faker->paragraph())
+                ;
+                $manager->persist($booking);
             }
         }
         $manager->flush();

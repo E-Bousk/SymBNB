@@ -9,9 +9,8 @@
 {% form_theme form 'ad/_collection.html.twig' %}
 
 {% block body %}
-
     <div class="container">
-        <h1>Modifier l'annonce « {{ ad.title }} »</h1>
+        <h1>Modifier l'annonce «&nbsp;{{ ad.title }}&nbsp;»</h1>
 
         {{ form_start(form)}}
 
@@ -20,7 +19,5 @@
         <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
 
         {{ form_end(form)}}
-
     </div>
-
 {% endblock %}

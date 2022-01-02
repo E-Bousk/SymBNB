@@ -3,71 +3,69 @@
 {% block title %}{{ ad.title }}{% endblock %}
 
 {% block body %}
-
-<div class="ad-title" style="background-image: url({{ ad.coverImage }})">
+    <div class="ad-title" style="background-image: url({{ ad.coverImage }})">
+        <div class="container">
+            <h1>{{ ad.title }}</h1>
+            <p>{{ ad.introduction }}</p>
+            <p class="h2">
+                <strong>{{ ad.rooms }} chambres</strong> pour <strong>{{ ad.price }}&euro;</strong> par nuit
+            </p>
+            {% if app.user is same as ad.author %}
+                <a class="btn btn-secondary" href="{{ path('ads_edit', {slug: ad.slug}) }}">Modifier l'annonce</a>
+                <a class="btn btn-danger" href="{{ path('ads_delete', {slug: ad.slug}) }}" onclick="return confirm(`Êtes-vous sûr de vouloir supprimer l'annonce «&nbsp;{{ ad.title }}&nbsp;» ?`)">Supprimer l'annonce</a>
+            {% else %}
+                <a class="btn btn-primary" href="{{ path('booking', {slug: ad.slug}) }}">Réserver</a>
+            {% endif %}
+        </div>
+    </div>
     <div class="container">
-        <h1>{{ ad.title }}</h1>
-        <p>{{ ad.introduction }}</p>
-        <p class="h2">
-            <strong>{{ ad.rooms }} chambres</strong> pour <strong>{{ ad.price }}&euro;</strong> par nuit
-        </p>
-        {% if app.user is same as ad.author %}
-            <a class="btn btn-secondary" href="{{ path('ads_edit', {slug: ad.slug}) }}">Modifier l'annonce</a>
-            <a class="btn btn-danger" href="{{ path('ads_delete', {slug: ad.slug}) }}" onclick="return confirm(`Êtes-vous sûr de vouloir supprimer l'annonce « {{ ad.title }} » ?`)">Supprimer l'annonce</a>
-        {% else %}
-            <a class="btn btn-primary" href="#">Réserver</a>
-        {% endif %}
-    </div>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="mb-3 col-md-8">
-            {{ ad.content | raw }}
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    {% for image in ad.images %}
-                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ loop.index0 }}" class="{{ loop.first ? 'active' :''}}"></li>
-                    {% endfor %}
-                </ol>
-                <div class="carousel-inner">
-                    {% for image in ad.images %}
-                        <div class="carousel-item {{ loop.first ? 'active' :''}}">
-                            <img class="d-block w-100" src="{{ image.url }}" alt="First slide">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>{{ ad.title }}</h5>
-                                <p>{{ image.caption }}</p>
+        <div class="row">
+            <div class="mb-3 col-md-8">
+                {{ ad.content | raw }}
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        {% for image in ad.images %}
+                        <li data-target="#carouselExampleIndicators" data-slide-to="{{ loop.index0 }}" class="{{ loop.first ? 'active' :''}}"></li>
+                        {% endfor %}
+                    </ol>
+                    <div class="carousel-inner">
+                        {% for image in ad.images %}
+                            <div class="carousel-item {{ loop.first ? 'active' :''}}">
+                                <img class="d-block w-100" src="{{ image.url }}" alt="First slide">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>{{ ad.title }}</h5>
+                                    <p>{{ image.caption }}</p>
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
-        <div class="col">
-        {% set a = ad.author %}
-            <div class="mb-3 row align-item-center">
-                <div class="col-3">
-                    <a href="{{ path('user_show', {slug: a.slug }) }}">
-                        <img class="avatar avatar-medium" src="{{ a.picture }}" alt="Avatar de {{ a.fullName }}">
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
                     </a>
                 </div>
-                <div class="col">
-                    <a href="{{ path('user_show', {slug: a.slug }) }}">
-                        <h3>{{ a.fullName }}</h3>
-                    </a>
-                    <span class="badge badge-primary">{{ a.ads | length }} annonces</span>
-                </div>
             </div>
-            {{ a.description | raw }}
+            <div class="col">
+            {% set a = ad.author %}
+                <div class="mb-3 row align-item-center">
+                    <div class="col-3">
+                        <a href="{{ path('user_show', {slug: a.slug }) }}">
+                            <img class="avatar avatar-medium" src="{{ a.picture }}" alt="Avatar de {{ a.fullName }}">
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="{{ path('user_show', {slug: a.slug }) }}">
+                            <h3>{{ a.fullName }}</h3>
+                        </a>
+                        <span class="badge badge-primary">{{ a.ads | length }} annonces</span>
+                    </div>
+                </div>
+                {{ a.description | raw }}
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

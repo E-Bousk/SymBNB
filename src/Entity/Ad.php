@@ -79,6 +79,11 @@ class Ad
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="ad")
+     */
+    private $bookings;
     
     /**
      * Création du slug
@@ -96,9 +101,47 @@ class Ad
         }
     }
 
+
+    /**
+     * Permet d'obtenir un tableau des jours qui ne sont pas disponibles
+     * 
+     * @return array Tableau d'objets DateTime représentant les jours d'occupation
+     */
+    public function getNotAvailableDays()
+    {
+        // crée un tableau de dates non disponibles
+        $notAvailableDays = [];
+        
+        foreach ($this->bookings as $booking) {
+            // Calcule les jours qui se trouvent entre la date d'arrivée et de départ
+            // convertit en secondes (Timestamp)
+            $result = range(
+                $booking->getStartDate()->getTimestamp(),
+                $booking->getEndDate()->getTimestamp(),
+                24 * 60 * 60
+            );
+
+            // Transforme les données du tableau « $result » :
+            // change chaque données (date au format timestamp) en véritable date (année-mois-jour)
+            $days = array_map(
+                function($dayTimestamp) {
+                    return new \DateTime(date('Y-m-d', $dayTimestamp)); 
+                },
+                $result
+            );
+            
+            // Ajoute les nouvelles dates au tableau de dates non disponibles
+            $notAvailableDays = array_merge($notAvailableDays, $days);
+        }
+
+        // Retourne le tableau de dates non disponibles
+        return $notAvailableDays;
+    }
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -228,6 +271,36 @@ class Ad
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Booking[]
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): self
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): self
+    {
+        if ($this->bookings->removeElement($booking)) {
+            // set the owning side to null (unless already changed)
+            if ($booking->getAd() === $this) {
+                $booking->setAd(null);
+            }
+        }
 
         return $this;
     }
