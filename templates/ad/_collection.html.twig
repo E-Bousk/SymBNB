@@ -3,7 +3,7 @@
 
 {# Permet de modifier la sortie de « form_widget() » sur le champ « ad_images » #}
 {% block _ad_images_widget %}
-    <p>Ajoutez vos images</p>
+    <p>Ici vous pouvez ajouter vos images !</p>
 
     {# ‼ la variable « form » n'est pas la même que celle du bloc 'body' #}
     {{ form_widget(form) }} 
@@ -11,9 +11,12 @@
     {# Permet de compter le nombre de champ 'image" (initialisé à zéro) #}
     <input type="hidden" id="widgets-counter" value="0">
 
-    <form-group>
-        <button type="button" id="add-image" class="btn btn-primary">Ajouter une image</button>
-    </form-group>
+    <div class="form-group">
+        <button type="button" id="add-image" class="btn btn-primary">
+            <i class="fas fa-plus"></i> 
+            Ajouter une image
+        </button>
+    </div>
 
 {% endblock %}
 

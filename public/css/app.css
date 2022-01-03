@@ -13,6 +13,12 @@
     text-shadow: 3px 3px 3px rgba(0,0,0,0.5);
 }
 
+.ad-title .btn {
+    margin-top: 2em;
+    font-size: 1.5em;
+    line-height: 1.5em;
+}
+
 .carousel-caption {
     text-shadow: 3px 3px 3px rgba(0,0,0,0.5);
 }
@@ -39,4 +45,8 @@
 
 .rating i {
     color: goldenrod;
+}
+
+.alert a {
+    text-decoration: none;
 }

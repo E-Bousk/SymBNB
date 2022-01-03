@@ -4,17 +4,40 @@
 
 {% block body %}
     <div class="container">
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-10">
-                <div class="py-3 px-3 bg-light rounded">
-                    <h1>Inscrivez-vous sur notre site</h1>
-                        {{ form_start(form)}}
-                        {{ form_widget(form)}}
-                        <button type="submit" class="btn btn-success">Confirmer l'inscription</button>
-                        {{ form_end(form)}}
+        <h1 class="my-3">Inscrivez-vous sur notre site</h1>
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-light">
+                        <h2 class="h3 alert-heading">Informations générales</h2>
+                        <hr>
+                        {{ form_row(form.firstName) }}
+                        {{ form_row(form.lastName) }}
+                        {{ form_row(form.email) }}
+                        {{ form_row(form.picture) }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="alert alert-light">
+                        <h2 class="h3 alert-heading">Mot de passe</h2>
+                        <hr>
+                        {{ form_row(form.password) }}
+                        {{ form_row(form.passwordConfirm) }}
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="alert alert-light">
+                <h2 class="h3 alert-heading">Détails</h2>
+                <hr>
+                {{ form_row(form.introduction) }}
+                {{ form_row(form.description) }}
+                <hr>
+                <p>Confirmez votre inscription et rejoignez-nous !</p>
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-check"></i>
+                    Confirmer l'inscription
+                </button>
+            </div>
+        {{ form_end(form)}}
     </div>
 {% endblock %}

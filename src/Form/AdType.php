@@ -22,7 +22,7 @@ class AdType extends ConfigType
             ->add(
                 'title',
                 TextType::class,
-                $this->getConfiguration('Titre', 'Donnez un titre à votre annonce')
+                $this->getConfiguration('Titre :', 'Donnez un titre à votre annonce')
             )
             // ->add(
             //     'slug',
@@ -34,7 +34,7 @@ class AdType extends ConfigType
             ->add(
                 'coverImage',
                 UrlType::class,
-                $this->getConfiguration('URL de l\'image principale', 'Indiquez l\'URL de votre image principale', [
+                $this->getConfiguration('URL de l\'image principale :', 'Indiquez l\'URL de votre image principale', [
                     'required' => false,
                     'empty_data' => 'https://picsum.photos/200',
                     'default_protocol' => null
@@ -43,22 +43,22 @@ class AdType extends ConfigType
             ->add(
                 'introduction',
                 TextType::class,
-                $this->getConfiguration('Introduction', 'Donnez un description sommaire pour votre annonce')
+                $this->getConfiguration('Introduction :', 'Donnez un description sommaire pour votre annonce')
             )
             ->add(
                 'content',
                 TextareaType::class,
-                $this->getConfiguration('Description détaillée', 'Donnez une description détaillée pour votre annonce')
+                $this->getConfiguration('Description détaillée :', 'Donnez une description détaillée pour votre annonce')
             )
             ->add(
                 'rooms',
                 IntegerType::class,
-                $this->getConfiguration('Nombre de chambre', 'Indiquez le nombre de chambre disponible')
+                $this->getConfiguration('Nombre de chambre :', 'Indiquez le nombre de chambre disponible')
             )
             ->add(
                 'price',
                 MoneyType::class,
-                $this->getConfiguration('Prix par nuit', 'Indiquez votre prix pour une nuit')
+                $this->getConfiguration('Prix par nuit :', 'Indiquez votre prix pour une nuit')
             )
             ->add(
                 'images',

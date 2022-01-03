@@ -8,7 +8,7 @@
             <h1>{{ ad.title }}</h1>
             <p>{{ ad.introduction }}</p>
             <p class="h2">
-                <strong>{{ ad.rooms }} chambres</strong> pour <strong>{{ ad.price }}&euro;</strong> par nuit
+                <strong>{{ ad.rooms }} chambre(s)</strong> pour <strong>{{ ad.price | number_format(2, ',', ' ')  }}&nbsp;&euro;</strong> la nuit
             </p>
             {% if app.user is same as ad.author %}
                 <a class="btn btn-secondary" href="{{ path('ads_edit', {slug: ad.slug}) }}">Modifier l'annonce</a>
