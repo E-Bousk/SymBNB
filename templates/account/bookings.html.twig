@@ -9,9 +9,19 @@
             <p>Retrouvez ci-dessous toutes vos réservations passées et à venir</p>
         </div>
         {% for booking in app.user.bookings %}
-            <div class="mt-5 row align-items-center">
+            <div class="mt-5 row">
                 <div class="col-4">
                     <img src="{{ booking.ad.coverImage }}" alt="Photo de l'annonce {{ booking.ad.title }}" class="img-fluid">
+                    <div class="mt-3">
+                        {% set comment = booking.ad.commentFromBooker(app.user) %}
+                        {% if comment is not null %}
+                            <strong>Note : </strong>{{ include('partials/rating.html.twig', {rating: comment.rating}) }}
+                            <blockquote>{{ comment.content }}</blockquote>
+                        {% else %}
+                            Vous n'avez pas encore donné de note ...
+                            <p><a href="{{ path('booking_show', { id: booking.id }) }}#comment">Je donne mon avis</a></p>
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="col-8">
                     <h4>{{ booking.ad.title }}</h4>

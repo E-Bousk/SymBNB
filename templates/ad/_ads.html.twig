@@ -3,8 +3,12 @@
 <div class="col-md-6">
     <div class="mb-3 card bg-light">
         <div class="card-header text-center">
-            {{ ad.rooms }} chambres, <strong>{{ ad.price }}&euro; / nuit</strong> <br>
-            <small>Pas encore noté</small>
+            {{ ad.rooms }} chambres, <strong>{{ ad.price }}&euro;&nbsp;/&nbsp;nuit</strong> <br>
+            {% if ad.comments | length > 0 %}
+                <small>{{ include("partials/rating.html.twig", { rating : ad.AverageRating }) }}</small>
+            {% else %}
+                <small>Pas encore noté</small>
+            {% endif %}
         </div> {# fin card-header #}
         <a href="{{ url }}">
             <img src="{{ ad.coverImage }}" alt="Image de l'appartement" style="height: 200px; width: 100%; display:block;">

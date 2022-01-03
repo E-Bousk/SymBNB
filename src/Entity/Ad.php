@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use Cocur\Slugify\Slugify;
 use App\Repository\AdRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -84,6 +85,11 @@ class Ad
      * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="ad")
      */
     private $bookings;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="ad", orphanRemoval=true)
+     */
+    private $comments;
     
     /**
      * Création du slug
@@ -101,6 +107,43 @@ class Ad
         }
     }
 
+    /**
+     * Permet de récupérer le commentaire d'un utilisateur par rapport à une annonce
+     * 
+     * @param User $booker 
+     * @return mixed 
+     */
+    public function getCommentFromBooker(User $booker)
+    {
+        foreach ($this->comments as $comment) {
+            if ($comment->getAuthor() === $booker) return $comment;
+        }
+
+        return null;
+    }
+
+    /**
+     * Permet de caculer la moyenne des notations
+     * 
+     * @return float
+     */
+    public function getAverageRating() 
+    {
+        // 1) On transforme le tableau « array collection » (« $this->comment ») en 'vrai' tableau avec « toArray »
+        // 2) On 'réduit' le tableau des commentaires (« $this->comment ») à une seule valeur avec « array_reduce » 
+        // On boucle donc sur le tableau des commentaires et on appelle à chaque fois une fonction
+        // en lui passant '$total' (qui commence à zéro) et le commentaire en lui-même dans lequel on récupère la note pour l'additionner à '$total'
+        $sum = array_reduce($this->comments->toArray(), function($total, $comment) {
+            return $total + $comment->getRating();
+        }, 0);
+        
+        // Faire la division pour avoir la moyenne
+        // (‼ éviter la division par zéro ‼)
+        if (count($this->comments) > 0) return $sum / count($this->comments);
+
+        // Si pas de commentaire
+        return 0;
+    }
 
     /**
      * Permet d'obtenir un tableau des jours qui ne sont pas disponibles
@@ -142,6 +185,7 @@ class Ad
     {
         $this->images = new ArrayCollection();
         $this->bookings = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -299,6 +343,36 @@ class Ad
             // set the owning side to null (unless already changed)
             if ($booking->getAd() === $this) {
                 $booking->setAd(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getAd() === $this) {
+                $comment->setAd(null);
             }
         }
 

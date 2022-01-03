@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Ad;
 use App\Entity\Booking;
+use App\Entity\Comment;
 use App\Entity\Image;
 use App\Entity\Role;
 use App\Entity\User;
@@ -108,6 +109,17 @@ class SymbnbFixtures extends Fixture
                     ->setComment($faker->paragraph())
                 ;
                 $manager->persist($booking);
+
+                /** COMMENTS fixture */
+                if (mt_rand(0, 1)) {
+                    $comment = (new Comment())
+                        ->setContent($faker->paragraph())
+                        ->setRating($faker->numberBetween(0, 5))
+                        ->setAuthor($booking->getBooker())
+                        ->setAd($ad)
+                    ;
+                    $manager->persist($comment);
+                }
             }
         }
         $manager->flush();
