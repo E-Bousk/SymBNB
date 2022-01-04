@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Booking;
 use App\Form\AdminBookingType;
-use App\Repository\BookingRepository;
+use App\Service\Pagination;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,17 +16,20 @@ class AdminBookingController extends AbstractController
     /**
      * Permet d'afficher toutes les réservations
      * 
-     * @Route("/admin/bookings", name="admin_bookings_index")
+     * @Route("/admin/bookings/{page<\d+>?1}", name="admin_bookings_index")
      * 
-     * @param BookingRepository $rep 
+     * @param $page 
+     * @param Pagination $pagination 
      * @return Response
      */
-    public function index(BookingRepository $repo): Response
+    public function index($page, Pagination $pagination): Response
     {
+        $pagination->setEntityClass(Booking::class)
+            ->setCurrentPage($page)
+            ->setLimit(7)
+        ;
 
-        return $this->render('admin/booking/index.html.twig', [
-            'bookings' => $repo->findAll()
-        ]);
+        return $this->render('admin/booking/index.html.twig', compact('pagination'));
     }
 
     /**
@@ -46,7 +49,7 @@ class AdminBookingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Équivalent : dans l'entité on 'PreUpdate' et calcul le montant lorsque celui-ci est 'empty'
-            // $booking->setAmount($booking->getAd()->getPrice() * $booking->getDuration());
+                // $booking->setAmount($booking->getAd()->getPrice() * $booking->getDuration());
             $booking->setAmount(0);
 
             $manager->flush();

@@ -4,28 +4,44 @@ namespace App\Controller;
 
 use App\Entity\Ad;
 use App\Form\AdType;
-use App\Repository\AdRepository;
+use App\Service\Pagination;
+use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 class AdminAdController extends AbstractController
 {
     /**
      * Permet d'afficher toutes les annonces
      * 
-     * @Route("/admin/ads", name="admin_ads_index")
+     * @Route("/admin/ads/{page<\d+>?1}", name="admin_ads_index")
      * 
-     * @param AdRepository $rep 
+     * @param $page
+     * @param Pagination $pagination 
      * @return Response
      */
-    public function index(AdRepository $repo): Response
+    public function index($page, Pagination $pagination): Response
     {
-        return $this->render('admin/ad/index.html.twig', [
-            'ads' => $repo->findAll()
-        ]);
+        // Remplacé par le service « Pagination » :
+            // $limit = 7;
+            // $start = ($page * $limit) - $limit;
+            // $totalPage = count($repo->findAll());
+            // $NbrPages = ceil($totalPage / $limit);
+
+            // return $this->render('admin/ad/index.html.twig', [
+            //     'ads' => $repo->findby([], [], $limit, $start),
+            //     'NbrPages' => $NbrPages,
+            //     'page'=> $page
+            // ]);
+
+        $pagination->setEntityClass(Ad::class)
+            ->setCurrentPage($page)
+            ->setLimit(7)
+        ;
+
+        return $this->render('admin/ad/index.html.twig', compact('pagination'));
     }
 
     /**

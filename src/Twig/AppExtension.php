@@ -38,7 +38,7 @@ class AppExtension extends AbstractExtension
         // sinon, on ajoute juste un espace après cet article (ex: « de » devient « de  »)
         $str = $elision ? sprintf("%s'", substr($article, 0, -1)) : sprintf("%s ", $article);
 
-        // revoit le résultat
+        // renvoie le résultat
         return $str;
     }
 }
