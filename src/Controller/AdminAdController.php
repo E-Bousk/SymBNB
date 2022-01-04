@@ -39,6 +39,8 @@ class AdminAdController extends AbstractController
         $pagination->setEntityClass(Ad::class)
             ->setCurrentPage($page)
             ->setLimit(7)
+            // ->setRouteName('admin_ads_index') // La route est récupérée avec « RequestStack » dans le service « Pagination.php »
+            // ->setTemplatePath('admin/partials/pagination.html.twig') // Le chemin du template est définit dans « services.yaml »
         ;
 
         return $this->render('admin/ad/index.html.twig', compact('pagination'));

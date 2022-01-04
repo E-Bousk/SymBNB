@@ -27,6 +27,9 @@ class AdminBookingController extends AbstractController
         $pagination->setEntityClass(Booking::class)
             ->setCurrentPage($page)
             ->setLimit(7)
+            // ->setRouteName('admin_bookings_index') // La route est récupérée avec « RequestStack » dans le service « Pagination.php »
+            // ->setTemplatePath('admin/partials/pagination.html.twig') // Le template est différent (exemple)
+
         ;
 
         return $this->render('admin/booking/index.html.twig', compact('pagination'));

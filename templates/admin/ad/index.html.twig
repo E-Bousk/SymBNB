@@ -27,10 +27,10 @@
                         {{ ad.author.fullName }}
                     </td>
                     <td class="text-center">
-                        <span class="badge badge-light rounded">{{ ad.bookings | length }}</span>
+                        <span class="py-2 px-2 badge badge-pill badge-light rounded">{{ ad.bookings | length }}</span>
                     </td>
                     <td class="text-center">
-                        <span class="badge badge-light rounded">{{ ad.averageRating | number_format(1, ',', ' ') }}</span>
+                        <span class="py-2 px-2 badge badge-pill badge-light rounded">{{ ad.averageRating | number_format(1, ',', ' ') }}</span>
                     </td>
                     <td>
                         <a class="btn btn-outline-primary btn-sm" href="{{ path('admin_ads_edit', { id: ad.id }) }}"><i class="fas fa-pen"></i></a>
@@ -40,6 +40,6 @@
             {% endfor %}
             </tbody>
         </table>
-        {{ include('admin/partials/pagination.html.twig', { route: 'admin_ads_index'}) }}
+        {{ pagination.display() }}
     </div>
 {% endblock %}

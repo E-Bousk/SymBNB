@@ -27,6 +27,9 @@ class AdminCommentController extends AbstractController
         $pagination->setEntityClass(Comment::class)
             ->setCurrentPage($page)
             ->setLimit(5)
+            // ->setRouteName('admin_comments_index') // La route est récupérée avec « RequestStack » dans le service « Pagination.php »
+            // ->setTemplatePath('admin/partials/pagination.html.twig') // Le chemin du template est définit dans « services.yaml »
+
         ;
 
         return $this->render('admin/comment/index.html.twig', compact('pagination'));

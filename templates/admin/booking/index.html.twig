@@ -13,6 +13,7 @@
                     <th>Date</th>
                     <th>Visiteur</th>
                     <th>Annonce</th>
+                    <th>Durée</th>
                     <th>Montant</th>
                     <th>Action</th>
                 </tr>
@@ -27,6 +28,9 @@
                         {{ booking.booker.fullName }}
                     </td>
                     <td>{{ booking.ad.title }}</td>
+                    <td class="text-center">
+                        <span class="py-2 px-2 badge badge-pill badge-light rounded">{{ booking.duration }}</span>
+                    </td>
                     <td>{{ booking.amount | number_format(2, ',', ' ')  }}&nbsp;&euro;</td>
                     <td>
                         <a class="btn btn-outline-primary btn-sm" href="{{ path('admin_bookings_edit', { id: booking.id }) }}"><i class="fas fa-pen"></i></a>
@@ -36,6 +40,6 @@
             {% endfor %}
             </tbody>
         </table>
-        {{ include('admin/partials/pagination.html.twig', { route: 'admin_bookings_index'}) }}
+        {{ pagination.display() }}
     </div>
 {% endblock %}
