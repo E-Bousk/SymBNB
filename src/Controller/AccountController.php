@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AccountController extends AbstractController
 {
     /**
-     * Afficher et gère le formulaire de connexion
+     * Affiche et gère le formulaire de connexion
      * (Voir « security.yaml »)
      * 
      * @Route("/login", name="account_login")

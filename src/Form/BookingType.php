@@ -35,6 +35,10 @@ class BookingType extends ConfigType
     {
         $resolver->setDefaults([
             'data_class' => Booking::class,
+            'validation_groups' => [
+                'Default',
+                'front' // Voir validation dans l'entité (« groups »)
+            ]
         ]);
     }
 }

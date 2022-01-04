@@ -4,9 +4,9 @@
 
 {% block body %}
     <div class="container">
-        <h1>Mes réservations</h1>
+        <h1 class="my-3 h2">Mes réservations</h1>
         <div class="mt-3 alert alert-info">
-            <p>Retrouvez ci-dessous toutes vos réservations passées et à venir</p>
+            Retrouvez ci-dessous toutes vos réservations passées et à venir
         </div>
         {% for booking in app.user.bookings %}
             <div class="mt-5 row">

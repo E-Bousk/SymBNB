@@ -1,0 +1,44 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des annonces{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="my-3 h2">Administration des annonces</h1>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID&nbsp;#</th>
+                    <th>Titre</th>
+                    <th>Auteur</th>
+                    <th class="text-center">Réservations</th>
+                    <th class="text-center">Note</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for ad in ads %}
+                <tr>
+                    <td>{{ ad.id }}</td>
+                    <td>{{ ad.title }}</td>
+                    <td>
+                        <img class="mr-2 avatar avatar-mini" src="{{ ad.author.picture }}" alt="Avatar de {{ ad.author.fullName }}">
+                        {{ ad.author.fullName }}
+                    </td>
+                    <td class="text-center">
+                        <span class="badge badge-light rounded">{{ ad.bookings | length }}</span>
+                    </td>
+                    <td class="text-center">
+                        <span class="badge badge-light rounded">{{ ad.averageRating | number_format(1, ',', ' ') }}</span>
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-primary btn-sm" href="{{ path('admin_ads_edit', { id: ad.id }) }}"><i class="fas fa-pen"></i></a>
+                        <a class="btn btn-outline-danger btn-sm" href="{{ path('admin_ads_delete', { id: ad.id }) }}" onclick="return confirm(`Êtes-vous sûr de vouloir supprimer l'annonce «&nbsp;{{ ad.title }}&nbsp;» ?`)"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

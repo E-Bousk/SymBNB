@@ -64,6 +64,8 @@ class AdType extends ConfigType
                 'images',
                 CollectionType::class,
                 [
+                    'label' => 'Images :',
+                    
                     'entry_type' => ImageType::class,
 
                     // Crée un « data-prototype »

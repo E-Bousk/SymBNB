@@ -1,0 +1,137 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modification de l'annonce n°&nbsp;{{ ad.id }}{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/admin.edit.js') }}"></script>
+{% endblock %}
+
+{# Appelle le thème spécifique (définit dans cette page) #}
+{% form_theme form _self %}
+
+{% block body %}
+        <div class="container">
+            <h1 class="my-3 h2">Modification de l'annonce «&nbsp;<em>{{ ad.title }}</em>&nbsp;»</h1>
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col">
+                    <div class="card bg-light">
+                        <div class="card-header">
+                            <h4 class="card-title">Corriger l'annonce ?</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ form_widget(form) }}
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-check"></i>
+                                Enregister les modifications
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-light">
+                        <div class="card-header">
+                            <h4 class="card-title">Les réservations</h4>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID&nbsp;#</th>
+                                        <th>Voyageur</th>
+                                        <th>Date de réservation</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for booking in ad.bookings %}
+                                        <tr>
+                                            <td>{{ booking.id }}</td>
+                                            <td>{{ booking.booker.fullName }}</td>
+                                            <td>{{ booking.createdAt | date('d/m/Y H:i') }}</td>
+                                            <td>
+                                                <a href="" class="btn btn-primary">
+                                                    <i class="fas fa-pen"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="mt-5 card bg-light">
+                        <div class="card-header">
+                            <h4 class="card-title">Les commentaires</h4>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID&nbsp;#</th>
+                                        <th>Voyageur</th>
+                                        <th>Note</th>
+                                        <th>Commentaire</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for comment in ad.comments %}
+                                        <tr>
+                                            <td>{{ comment.id }}</td>
+                                            <td>{{ comment.author.fullName }}</td>
+                                            <td>{{ comment.rating }}</td>
+                                            <td>{{ comment.content }}</td>
+                                            <td>
+                                                <a href="" class="btn btn-primary">
+                                                    <i class="fas fa-pen"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+{# ---------------------------------------------------------------------- #}
+
+{# Crée un thème spécifique #}
+
+{# Bloc appelé pour afficher le 'widget' du champ « ad_images » #}
+{% block _ad_images_widget %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{# Surcharge le 'row' #}
+{% block _ad_images_entry_row %}
+    <div id="block_{{id}}">
+        {{ form_widget(form) }}
+    </div>
+{% endblock %}
+
+{# Surcharge le 'widget' #}
+{% block _ad_images_entry_widget %}
+    <div class="mb-3 row align-items-center">
+        <div class="col-2">
+            {% if value %}
+                <img class="img-fluid" src="{{ value.url }}" alt="{{ value.caption }}">
+            {% endif %}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.url) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.caption) }}
+        </div>
+        <div class="pt-3 col">
+            <button class="btn btn-danger" type="button" data-action="delete" data-target="#block_{{id}}">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    </div>
+{% endblock %}
