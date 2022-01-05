@@ -10,7 +10,9 @@
 
 {% block body %}
     <div class="container">
-        <h1 class="my-3 h2">Modifier l'annonce «&nbsp;{{ ad.title }}&nbsp;»</h1>
+        <div class="mb-3 ad-title" style="background-image: url({{ ad.coverImage }})">
+            <h1 class="my-3 h2">Modifier l'annonce «&nbsp;{{ ad.title }}&nbsp;»</h1>
+        </div>
 
         {{ form_start(form)}}
 
