@@ -36,7 +36,7 @@ class AdType extends ConfigType
                 UrlType::class,
                 $this->getConfiguration('URL de l\'image principale :', 'Indiquez l\'URL de votre image principale', [
                     'required' => false,
-                    'empty_data' => 'https://picsum.photos/200',
+                    'empty_data' => 'https://picsum.photos/1000/350',
                     'default_protocol' => null
                 ])
             )

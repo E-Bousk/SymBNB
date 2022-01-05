@@ -18,19 +18,24 @@ class AdminBookingType extends AbstractType
     {
         $builder
             ->add('startDate', DateType::class, [
+                'label' => 'Date d\'arrivée :',
                 'widget' => 'single_text'
             ])
             ->add('endDate', DateType::class, [
+                'label' => 'Date de départ :',
                 'widget' => 'single_text'
             ])
             ->add('comment', TextareaType::class, [
+                'label' => 'Commentaire :',
                 'required' => false
             ])
             ->add('booker', EntityType::class, [
+                'label' => 'Réservé par :',
                 'class' => User::class,
                 'choice_label' => 'fullName'
             ])
             ->add('ad', EntityType::class, [
+                'label' => 'Annonce :',
                 'class' => Ad::class,
                 'choice_label' => function($ad) {
                     return sprintf("Annonce numéro %s - %s", $ad->getId(), strtoupper($ad->getTitle()));

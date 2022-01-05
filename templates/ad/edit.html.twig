@@ -3,7 +3,7 @@
 {% block title %}Modification de l'annonce {{ ad.title }}{% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('js/ads.js')}}"></script>
+   {{ encore_entry_script_tags('ads') }}
 {% endblock %}
 
 {% form_theme form 'ad/_collection.html.twig' %}

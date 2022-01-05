@@ -6,14 +6,10 @@
         <title>SymBNB - {% block title %}Welcome!{% endblock %}</title>
         
 
-        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/all.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        {{ encore_entry_link_tags('app') }}
         {% block stylesheets %}{% endblock %}
         
-        <script src="{{ asset('js/jquery.min.js') }}"></script>
-        <script src="{{ asset('js/popper.min.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        {{ encore_entry_script_tags('app') }}
         {% block javascripts %}{% endblock %}
     </head>
     <body>

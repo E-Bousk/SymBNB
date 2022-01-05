@@ -2,14 +2,10 @@
 
 {% block title %}Réserver l'annonce : {{ ad.title }}{% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
-{% endblock %}
-
 {% block javascripts %}
-    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-datepicker.fr.min.js') }}" charset="UTF-8"></script>
-    <script src="{{ asset('js/booking.js') }}"></script>
+    {{ encore_entry_script_tags('bootstrap-datepicker.min') }}
+    {{ encore_entry_script_tags('bootstrap-datepicker.fr.min') }}
+    {{ encore_entry_script_tags('booking') }}
 {% endblock %}
 
 {% block body %}

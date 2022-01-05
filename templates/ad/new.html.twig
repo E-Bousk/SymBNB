@@ -3,7 +3,7 @@
 {% block title %}Création d'une annonce{% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('js/ads.js')}}"></script>
+    {{ encore_entry_script_tags('ads') }}
 {% endblock %}
 
 {# Note : « form_theme » permet de spécifier un thème pour un formulaire donné #}
